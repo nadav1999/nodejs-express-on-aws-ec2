@@ -1,0 +1,18 @@
+version: 0.0
+os: linux # operating system
+files:
+  - source: / # everything in our root directory
+    destination: /home/ec2-user/express-app
+hooks: # defines the scripts that we're going to run for the deployment
+  ApplicationStop:
+    - location: scripts/application_stop.sh # this file will run before anything happens
+      timeout: 300 # 300 milliseconds
+      runas: ec2-user
+  BeforeInstall:
+    - location: scripts/before_install.sh # this file will run before install anything
+      timeout: 300 # 300 milliseconds
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/application_start.sh # this script will run for starting our nodejs app
+      timeout: 300 # 300 milliseconds
+      runas: ec2-user
